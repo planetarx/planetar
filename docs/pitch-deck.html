@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>planetar — Zax Analytics — Pre-seed</title>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg:#0a0d12;
+  --bg2:#0d1118;
+  --panel:#131a24;
+  --panel2:#0f151d;
+  --line:#1e2a39;
+  --line2:#27384c;
+  --ink:#e8eef4;
+  --dim:#8a98a8;
+  --dim2:#5d6b7c;
+  --accent:#46d9c4;
+  --accent-dim:#1c4f48;
+  --warn:#f0a945;
+}
+
+/* ---- base ---- */
+.reveal{
+  font-family:'Inter',system-ui,sans-serif;
+  font-size:30px;
+  color:var(--ink);
+  font-weight:400;
+}
+.reveal-viewport{
+  background:
+    radial-gradient(ellipse 80% 60% at 50% -10%, #11202b 0%, transparent 60%),
+    var(--bg);
+}
+.reveal .slides{ text-align:left; }
+.reveal section{ height:100%; }
+
+.reveal h1,.reveal h2,.reveal h3{
+  font-family:'Inter',sans-serif;
+  color:var(--ink);
+  text-transform:none;
+  line-height:1.12;
+  letter-spacing:-0.02em;
+  margin:0;
+}
+.reveal h2{ font-size:1.62em; font-weight:800; }
+.reveal h3{ font-size:1.0em;  font-weight:700; }
+.reveal p{ line-height:1.45; margin:0; }
+.reveal strong{ color:var(--accent); font-weight:700; }
+.reveal em{ color:var(--ink); font-style:normal; border-bottom:1px solid var(--accent-dim); }
+.mono{ font-family:'JetBrains Mono',monospace; }
+
+/* ---- slide scaffold ---- */
+.slide{
+  height:100%;
+  display:flex; flex-direction:column;
+  padding:62px 78px 56px;
+  box-sizing:border-box;
+}
+.kicker{
+  font-family:'JetBrains Mono',monospace;
+  font-size:0.52em;
+  font-weight:500;
+  letter-spacing:0.32em;
+  color:var(--accent);
+  text-transform:uppercase;
+  margin-bottom:26px;
+  display:flex; align-items:center; gap:14px;
+}
+.kicker::before{
+  content:""; width:30px; height:1px; background:var(--accent); display:inline-block;
+}
+.kicker .num{ color:var(--dim2); letter-spacing:0.2em; }
+.lead{ color:var(--dim); font-size:0.74em; margin-top:14px; max-width:24em; line-height:1.5; }
+.fill{ flex:1; }
+.foot{
+  font-family:'JetBrains Mono',monospace;
+  font-size:0.4em; color:var(--dim2);
+  letter-spacing:0.04em; margin-top:22px;
+}
+
+/* ---- reusable bits ---- */
+.cards{ display:grid; gap:18px; }
+.card{
+  background:linear-gradient(180deg,var(--panel) 0%,var(--panel2) 100%);
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:24px 26px;
+}
+.card .ct{
+  font-family:'JetBrains Mono',monospace;
+  font-size:0.46em; letter-spacing:0.18em; text-transform:uppercase;
+  color:var(--accent); margin-bottom:12px; font-weight:500;
+}
+.card .cb{ font-size:0.66em; color:var(--dim); line-height:1.5; }
+.card .cb b{ color:var(--ink); font-weight:600; }
+
+.statline{ display:flex; gap:14px; }
+.stat{
+  flex:1;
+  background:var(--panel2);
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:20px 22px;
+}
+.stat .v{
+  font-family:'JetBrains Mono',monospace;
+  font-size:1.08em; font-weight:700; color:var(--accent);
+  letter-spacing:-0.01em;
+}
+.stat .l{ font-size:0.46em; color:var(--dim); margin-top:8px; letter-spacing:0.04em; }
+
+ul.clean{ list-style:none; margin:0; padding:0; }
+ul.clean li{
+  font-size:0.72em; color:var(--dim); line-height:1.4;
+  padding:14px 0 14px 30px; position:relative;
+  border-bottom:1px solid var(--line);
+}
+ul.clean li:last-child{ border-bottom:none; }
+ul.clean li::before{
+  content:""; position:absolute; left:2px; top:21px;
+  width:9px; height:9px; border:1.5px solid var(--accent);
+  border-radius:2px; transform:rotate(45deg);
+}
+ul.clean li b{ color:var(--ink); font-weight:600; }
+
+.tag{
+  font-family:'JetBrains Mono',monospace;
+  font-size:0.42em; letter-spacing:0.06em;
+  color:var(--accent); border:1px solid var(--accent-dim);
+  border-radius:5px; padding:3px 9px; background:rgba(70,217,196,0.06);
+}
+
+/* ---- title slide ---- */
+.title-slide{ justify-content:center; }
+.brand{
+  font-size:3.6em; font-weight:800; letter-spacing:-0.04em;
+}
+.brand .dot{ color:var(--accent); }
+.tagline{
+  font-size:1.05em; color:var(--ink); font-weight:500;
+  margin-top:18px; max-width:18em; line-height:1.3;
+}
+.title-meta{
+  display:flex; gap:32px; margin-top:46px;
+  font-family:'JetBrains Mono',monospace; font-size:0.46em;
+  color:var(--dim); letter-spacing:0.04em;
+}
+.title-meta span b{ color:var(--accent); font-weight:500; display:block; margin-bottom:5px; letter-spacing:0.14em; font-size:0.85em; }
+.gridline{ height:1px; background:linear-gradient(90deg,var(--accent) 0%,var(--line) 40%,transparent 100%); margin:34px 0; max-width:520px; }
+
+/* ---- architecture flow ---- */
+.flow{ display:flex; align-items:stretch; gap:0; margin-top:6px; }
+.flow .node{
+  flex:1;
+  background:var(--panel2); border:1px solid var(--line);
+  border-radius:10px; padding:18px 14px; text-align:center;
+}
+.flow .node .fi{
+  font-family:'JetBrains Mono',monospace; font-size:0.4em;
+  color:var(--dim2); letter-spacing:0.1em; margin-bottom:8px;
+}
+.flow .node .fn{ font-size:0.6em; font-weight:700; color:var(--ink); }
+.flow .node .fd{ font-size:0.4em; color:var(--dim); margin-top:6px; line-height:1.4; }
+.flow .arr{
+  display:flex; align-items:center; color:var(--accent);
+  font-family:'JetBrains Mono',monospace; font-size:0.7em; padding:0 6px;
+}
+
+/* ---- comparison table ---- */
+.cmp{ width:100%; border-collapse:collapse; font-size:0.6em; margin-top:4px; }
+.cmp th{
+  font-family:'JetBrains Mono',monospace; font-size:0.78em;
+  text-transform:uppercase; letter-spacing:0.1em;
+  color:var(--dim2); font-weight:500; text-align:left;
+  padding:12px 16px; border-bottom:1px solid var(--line2);
+}
+.cmp td{ padding:14px 16px; border-bottom:1px solid var(--line); color:var(--dim); vertical-align:top; }
+.cmp tr:last-child td{ border-bottom:none; }
+.cmp tr.us{ background:rgba(70,217,196,0.05); }
+.cmp tr.us td{ color:var(--ink); }
+.cmp tr.us td:first-child{ color:var(--accent); font-weight:700; }
+.cmp td:first-child{ font-weight:600; color:var(--ink); }
+
+/* ---- two-column ---- */
+.split{ display:grid; grid-template-columns:1fr 1fr; gap:34px; }
+.split.w{ grid-template-columns:1.15fr 0.85fr; }
+
+/* ---- demo steps ---- */
+.steps{ display:flex; flex-direction:column; gap:11px; }
+.step{
+  display:flex; gap:16px; align-items:flex-start;
+  background:var(--panel2); border:1px solid var(--line);
+  border-radius:9px; padding:14px 18px;
+}
+.step .sn{
+  font-family:'JetBrains Mono',monospace; font-size:0.62em; font-weight:700;
+  color:var(--accent); flex-shrink:0; width:24px;
+}
+.step .sx{ font-size:0.6em; color:var(--dim); line-height:1.42; }
+.step .sx b{ color:var(--ink); font-weight:600; }
+
+/* ---- ask ---- */
+.bigask{
+  font-family:'JetBrains Mono',monospace;
+  font-size:2.6em; font-weight:700; color:var(--accent);
+  letter-spacing:-0.02em;
+}
+.useof{ display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:8px; }
+.useof .u{
+  background:var(--panel2); border:1px solid var(--line);
+  border-top:2px solid var(--accent);
+  border-radius:0 0 9px 9px; padding:18px 20px;
+}
+.useof .u .un{ font-size:0.58em; font-weight:700; color:var(--ink); margin-bottom:8px; }
+.useof .u .ud{ font-size:0.46em; color:var(--dim); line-height:1.46; }
+
+.callout{
+  border-left:2px solid var(--accent);
+  background:rgba(70,217,196,0.05);
+  padding:16px 22px; border-radius:0 8px 8px 0;
+  font-size:0.64em; color:var(--ink); line-height:1.5;
+}
+.callout b{ color:var(--accent); }
+
+/* ---- reveal chrome ---- */
+.reveal .progress{ color:var(--accent); height:2px; }
+.reveal .slide-number{
+  font-family:'JetBrains Mono',monospace;
+  background:transparent; color:var(--dim2); font-size:13px;
+}
+.reveal .controls{ color:var(--line2); }
+</style>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+<!-- ============ 1 · TITLE ============ -->
+<section>
+  <div class="slide title-slide">
+    <div class="kicker"><span>Zax Analytics</span><span class="num">· Pre-seed · 2026</span></div>
+    <div class="brand">planetar<span class="dot">.</span></div>
+    <div class="gridline"></div>
+    <div class="tagline">Multi-modal situational awareness, rebuilt on a&nbsp;<strong>nanosecond message bus</strong>.</div>
+    <div class="title-meta">
+      <span><b>WHAT</b>Slack &times; Palantir, from<br>the transport layer up</span>
+      <span><b>WEDGE</b>Dark-vessel detection<br>&amp; re-identification</span>
+      <span><b>FOUNDER</b>Steven Ness, PhD<br>sness@sness.net</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 2 · PROBLEM ============ -->
+<section>
+  <div class="slide">
+    <div class="kicker"><span class="num">01</span><span>The Problem</span></div>
+    <h2>Sensor fusion is stuck in batch.</h2>
+    <p class="lead">Defence and maritime operators have more feeds than ever — and a slower, blinder picture than the threat requires.</p>
+    <div class="fill"></div>
+    <div class="cards" style="grid-template-columns:repeat(3,1fr);">
+      <div class="card">
+        <div class="ct">Siloed</div>
+        <div class="cb">AIS, SAR, EO, radar, acoustic, RF — each locked in its own tool, its own vendor, its own format. Nothing shares a clock.</div>
+      </div>
+      <div class="card">
+        <div class="ct">Too slow</div>
+        <div class="cb">Fusion happens hours later, in batch pipelines. The decisive moment has passed before the data is even joined.</div>
+      </div>
+      <div class="card">
+        <div class="ct">Unexplainable</div>
+        <div class="cb">No record of <b>why</b> a conclusion was reached. An operator cannot trust — or defend — what they cannot trace.</div>
+      </div>
+    </div>
+    <div class="callout" style="margin-top:24px;">
+      <b>Concretely:</b> a vessel switches off its AIS transponder and vanishes from the maritime picture — the standard move for illegal fishing, sanctions evasion, and sovereignty-testing incursions. Today, finding it again is manual, late, and unprovable.
+    </div>
+  </div>
+</section>
+
+<!-- ============ 3 · SOLUTION ============ -->
+<section>
+  <div class="slide">
+    <div class="kicker"><span class="num">02</span><span>The Solution</span></div>
+    <h2>One bus. Every modality. Full provenance.</h2>
+    <p class="lead">planetar makes every signal a typed message on a single, ultra-fast bus — so fusion is real-time and every output is traceable by construction.</p>
+    <div class="fill"></div>
+    <div class="cards" style="grid-template-columns:repeat(3,1fr);">
+      <div class="card">
+        <div class="ct">Typed envelopes</div>
+        <div class="cb">A SAR chip, an AIS ping, a hydrophone hit, an algorithm's output, an analyst's chat message — all become one <b>typed envelope</b> with nanosecond timestamps and lineage IDs.</div>
+      </div>
+      <div class="card">
+        <div class="ct">Composable viewers</div>
+        <div class="cb">Map, timeline, entity card, waveform, channel — every viewer is just a <b>consumer of the bus</b>. Add a sensor, every view updates live.</div>
+      </div>
+      <div class="card">
+        <div class="ct">Provenance graph</div>
+        <div class="cb">A provenance-tracked <b>entity graph</b> resolves identity across modalities. Every conclusion clicks back to its raw inputs.</div>
+      </div>
+    </div>
+    <div class="callout" style="margin-top:24px;">
+      Think <b>Slack &times; Palantir</b> — but rebuilt from the transport layer up, fast enough to run live at the edge.
+    </div>
+  </div>
+</section>
+
+<!-- ============ 4 · THE MOAT (TECH) ============ -->
+<section>
+  <div class="slide">
+    <div class="kicker"><span class="num">03</span><span>Why It's Hard To Copy</span></div>
+    <h2>The bus is the thesis.</h2>
+    <p class="lead">The entire platform rests on one piece of genuinely hard engineering — a new bus design we call the <strong>Distributed Disruptor</strong>, written from scratch in C.</p>
+    <div class="fill"></div>
+    <div class="statline" style="margin-bottom:18px;">
+      <div class="stat"><div class="v">80&ndash;140&nbsp;ns</div><div class="l">P50 LATENCY &mdash; FASTER THAN A CPU CONTEXT SWITCH</div></div>
+      <div class="stat"><div class="v">~1.9M&nbsp;msg/s</div><div class="l">SUSTAINED THROUGHPUT, SINGLE COMMODITY HOST</div></div>
+      <div class="stat"><div class="v">~1,200 LOC</div><div class="l">PURE C &mdash; NO DEPENDENCIES BEYOND LIBC</div></div>
+    </div>
+    <ul class="clean">
+      <li><b>A new pattern — the Distributed Disruptor.</b> The classic LMAX Disruptor is a single-process ring buffer; planetar meshes many Disruptors into one fabric, extending the nanosecond hot path across hosts and edge nodes.</li>
+      <li><b>Lock-free, zero-copy.</b> Shared memory + TCP + UDP transports and a durable write-ahead log with CRC32 checks — so whatever AI model you bolt on rides the bus at zero meaningful overhead.</li>
+      <li><b>Edge-ready.</b> A laptop today, an edge node tomorrow — no cluster, no cloud dependency, low size-weight-and-power.</li>
+    </ul>
+    <p class="foot">Benchmark: 1M-message run on the predecessor build (zbroker0), commodity Linux, 2026-04-27. planetar-broker re-benchmark in progress.</p>
+  </div>
+</section>
+
+<!-- ============ 5 · ARCHITECTURE + DEMO ============ -->
+<section>
+  <div class="slide">
+    <div class="kicker"><span class="num">04</span><span>How It Works</span></div>
+    <h2>Five layers &mdash; one flagship demo.</h2>
+    <div style="margin-top:24px;">
+      <div class="flow">
+        <div class="node"><div class="fi">L1</div><div class="fn">Envelope</div><div class="fd">typed, ns-stamped, lineage IDs</div></div>
+        <div class="arr">&rsaquo;</div>
+        <div class="node"><div class="fi">L2</div><div class="fn">Bus</div><div class="fd">ns transport, durable WAL</div></div>
+        <div class="arr">&rsaquo;</div>
+        <div class="node"><div class="fi">L3</div><div class="fn">Detectors</div><div class="fd">AIS · SAR · EO · acoustic · RF</div></div>
+        <div class="arr">&rsaquo;</div>
+        <div class="node"><div class="fi">L4</div><div class="fn">Entity graph</div><div class="fd">cross-modal identity resolution</div></div>
+        <div class="arr">&rsaquo;</div>
+        <div class="node"><div class="fi">L5</div><div class="fn">Shell</div><div class="fd">4-pane analyst workspace</div></div>
+      </div>
+    </div>
+    <div class="fill"></div>
+    <h3 style="color:var(--accent);margin-bottom:14px;font-size:0.84em;">Flagship demo &mdash; dark-vessel re-identification</h3>
+    <div class="steps">
+      <div class="step"><div class="sn">01</div><div class="sx"><b>A vessel goes dark.</b> Its AIS transponder switches off; a gap detector fires the moment the beacon should be there and isn't.</div></div>
+      <div class="step"><div class="sn">02</div><div class="sx"><b>Other modalities keep seeing it.</b> SAR, EO, acoustic and RF detections in the same space-time window stream onto the bus.</div></div>
+      <div class="step"><div class="sn">03</div><div class="sx"><b>The graph fuses them</b> into a scored re-ID candidate &mdash; with every supporting signal attached as evidence. The analyst sees the reconstructed track, and clicks any conclusion back to raw data.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 6 · TRACTION ============ -->
+<section>
+  <div class="slide">
+    <div class="kicker"><span class="num">05</span><span>Traction</span></div>
+    <h2>Built, not promised.</h2>
+    <p class="lead">This is not a concept deck. The full stack runs today and ingests real vessels.</p>
+    <div class="fill"></div>
+    <div class="split w">
+      <ul class="clean">
+        <li><b>The whole stack runs.</b> Bus, envelope format, five sensor-ingest services, entity graph, and a 4-pane analyst shell &mdash; all working, all open-sourced on GitHub.</li>
+        <li><b>Live data, not fixtures.</b> Real-time AIS ingest over Victoria, BC &mdash; actual vessels on the map right now.</li>
+        <li><b>Years of foundation.</b> A ~20,000-line entity-resolution engine behind the graph, refined over ~18 months of real-world use.</li>
+      </ul>
+      <div class="card" style="align-self:center;">
+        <div class="ct">Non-dilutive path in motion</div>
+        <div class="cb">Preparing a submission to Canada's <b>DND IDEaS</b> program &mdash; CFP6 Challenge&nbsp;13, <i>multi-modal AI for situational decisions</i>.<br><br>Up to <b>$250K CAD non-dilutive</b>; targeting submission in May 2026. A defence-funded route to validate the architecture alongside this round.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 7 · MARKET ============ -->
+<section>
+  <div class="slide">
+    <div class="kicker"><span class="num">06</span><span>Market</span></div>
+    <h2>Maritime is the wedge.<br>The platform is horizontal.</h2>
+    <p class="lead">The same playbook that built Palantir: land one hard government problem, then expand across domains on the same spine.</p>
+    <div class="fill"></div>
+    <div class="cards" style="grid-template-columns:repeat(3,1fr);">
+      <div class="card">
+        <div class="ct">Now &mdash; Defence</div>
+        <div class="cb">Maritime domain awareness for navies and coast guards. Dark-vessel detection is an active, funded, sovereignty-level need.</div>
+      </div>
+      <div class="card">
+        <div class="ct">Next &mdash; Commercial maritime</div>
+        <div class="cb">Marine insurance, port authorities, and illegal-fishing enforcement all buy the same live, explainable vessel picture.</div>
+      </div>
+      <div class="card">
+        <div class="ct">Then &mdash; Any sensor domain</div>
+        <div class="cb">The architecture is domain-agnostic: any problem that fuses heterogeneous sensors into a live entity picture is addressable.</div>
+      </div>
+    </div>
+    <div class="callout" style="margin-top:24px;">
+      Defence ISR software and maritime domain awareness are multi-billion-dollar markets, expanding fast with autonomous-systems and contested-waters spending. <b>We need a sliver of the wedge to be a venture outcome.</b>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 8 · COMPETITION ============ -->
+<section>
+  <div class="slide">
+    <div class="kicker"><span class="num">07</span><span>Competition</span></div>
+    <h2>Everyone sells a feed or a data lake.</h2>
+    <p class="lead">No incumbent owns the real-time, edge-deployable, explainable fusion layer. That gap is the opening.</p>
+    <div class="fill"></div>
+    <table class="cmp">
+      <thead><tr><th>Player</th><th>What they sell</th><th>The gap</th></tr></thead>
+      <tbody>
+        <tr><td>Palantir</td><td>Foundry / Gotham integration &amp; analysis layer</td><td>Batch-oriented, heavyweight, enterprise-priced; not edge- or real-time-native</td></tr>
+        <tr><td>Spire · HawkEye 360</td><td>Satellite AIS / RF data feeds</td><td>Data providers — they sell the signal, not the fused decision layer</td></tr>
+        <tr><td>Defence primes</td><td>Bespoke integration programs</td><td>Slow, expensive, single-customer; no composable product</td></tr>
+        <tr class="us"><td>planetar</td><td>Real-time bus-native fusion + explainable shell</td><td>&mdash; The live, provable picture, edge-deployable, built capital-efficiently</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ============ 9 · MOAT / PHILOSOPHY ============ -->
+<section>
+  <div class="slide">
+    <div class="kicker"><span class="num">08</span><span>Why It Compounds</span></div>
+    <h2>The moat gets deeper with use.</h2>
+    <div class="fill"></div>
+    <div class="cards" style="grid-template-columns:1fr 1fr;">
+      <div class="card">
+        <div class="ct">Architecture moat</div>
+        <div class="cb">The nanosecond bus is hard to build and far harder to retrofit. Competitors start from batch pipelines — they cannot bolt real-time on after the fact. We start where they would have to finish.</div>
+      </div>
+      <div class="card">
+        <div class="ct">Data network effect</div>
+        <div class="cb">Every deployment enriches the entity graph. Each new modality and each new vessel observed makes identity resolution sharper — for <b>every</b> customer. The product improves as it spreads.</div>
+      </div>
+    </div>
+    <div class="callout" style="margin-top:22px;">
+      <b>Open-core, by design.</b> The code is AGPL — and because we control it, we dual-license it to ourselves: our own product runs unencumbered. Any competitor who builds on planetar must open their entire stack. Open source earns adoption and trust; copyleft defends it.
+    </div>
+  </div>
+</section>
+
+<!-- ============ 10 · FOUNDER ============ -->
+<section>
+  <div class="slide">
+    <div class="kicker"><span class="num">09</span><span>The Founder</span></div>
+    <h2>Built this class of system before.</h2>
+    <p class="lead">planetar exists because one person has spent a career at the intersection of entity resolution and maritime sensor ML — and ships.</p>
+    <div class="fill"></div>
+    <div class="split w">
+      <ul class="clean">
+        <li><b>Steven Ness, PhD</b> &mdash; computer science / machine learning. Solo founder, Zax Analytics.</li>
+        <li><b>Prior art in exactly this domain.</b> Named inventor on US Patent&nbsp;10,936,582 &mdash; the integrated entity-resolution architecture, held by Salesforce. Has built identity-resolution-at-scale before planetar.</li>
+        <li><b>Maritime sensor ML track record.</b> Hydrophone classification on Ocean Networks Canada data (95% accuracy, IEEE PacRim); widely-cited acoustic-ML research.</li>
+      </ul>
+      <div class="card" style="align-self:center;">
+        <div class="ct">The proof is the velocity</div>
+        <div class="cb">The entire planetar stack &mdash; nanosecond bus to analyst shell &mdash; was built <b>solo, in months</b>.<br><br>That capital efficiency is the bet: a pre-seed check buys a team, not a first prototype.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 11 · THE ASK ============ -->
+<section>
+  <div class="slide">
+    <div class="kicker"><span class="num">10</span><span>The Ask</span></div>
+    <h2>Raising a pre-seed round.</h2>
+    <div class="bigask" style="margin-top:22px;">$500K &ndash; $1M</div>
+    <p class="lead" style="max-width:30em;">To convert a working platform and a defence validation signal into a deployed, referenceable engagement.</p>
+    <div class="fill"></div>
+    <div class="useof">
+      <div class="u">
+        <div class="un">First defence pilot</div>
+        <div class="ud">Turn the IDEaS demo into a deployed, paid engagement with a maritime defence customer.</div>
+      </div>
+      <div class="u">
+        <div class="un">Mature past TRL 3</div>
+        <div class="ud">Production fusion head, hardening, and the second sensor domain proven on the same spine.</div>
+      </div>
+      <div class="u">
+        <div class="un">Team &amp; compute</div>
+        <div class="ud">First technical hire alongside the founder, plus the compute to run live fusion at scale.</div>
+      </div>
+    </div>
+    <div class="callout" style="margin-top:24px;display:flex;justify-content:space-between;align-items:center;">
+      <span><b>Steven Ness</b> &nbsp;·&nbsp; Zax Analytics &nbsp;·&nbsp; <span class="mono">sness@sness.net</span></span>
+      <span class="tag">LET'S TALK</span>
+    </div>
+  </div>
+</section>
+
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script>
+Reveal.initialize({
+  width:1280, height:720, margin:0.04,
+  controls:true, progress:true, slideNumber:'c/t',
+  hash:true, transition:'fade', transitionSpeed:'fast',
+  controlsTutorial:false
+});
+</script>
+</body>
+</html>
