@@ -174,3 +174,22 @@ The honest TRL claim: **bus + envelope + shell + ingress + four per-modality det
 - **Cold reader (W4):** read this *after* `docs/external-reader-briefing.md`. Verifies the proposal isn't asking for funding to build things that already exist.
 - **DIP submission day (T-0):** spot-check any narrative reference like "working bus" / "shipped service" / "broker-integrated" — every one should map to a row here.
 - **Audit (post-award, 6-year window):** every claim in PRC-4 traces to a row here; every row here traces to a git commit + last-commit date + LOC count + test count. Verifiable spine.
+
+---
+
+## Post-snapshot additions (after 2026-05-21 — NOT cited by the filed CH13 bid)
+
+Services built after the snapshot above. They post-date the `submission-2026-05-30` tag, so they are **not** evidence for the filed CH13 claims; they are verified here for use by future bids.
+
+### `planetar-flutter` — mobile client (verified 2026-07-13)
+
+| Field | Value |
+|---|---|
+| Repo | `~/github/planetarx/planetar-flutter/` |
+| Language | Flutter/Dart |
+| LOC | 2,595 Dart total (18 files under `lib/`; minimal `test/widget_test.dart`) |
+| Last commit | `bc7b20e`, 2026-07-13 |
+| What | Discord-style iOS/Android client: server rail (Operations), channel list grouped CHANNELS/VESSELS/THREADS/ALERTS, conversation view + composer, live vessel map (OpenStreetMap + AIS dots) |
+| Integration | Speaks the bridge's JSON-over-WebSocket protocol (`subscribe`/`unsubscribe`/`publish` out, `envelope` in); topics `chat.<server>.<channel>`, `vessel.ais.position`, `vessel.ais.fleet`; default feed **`wss://planetar.ca/ws`** (build-time `--dart-define=BROKER_URL` + in-app runtime setting) |
+| Deploy | TestFlight upload script (`tools/testflight-upload.sh`); seeded mock-data fallback if the feed is offline; macOS dev shim for the Linux-only broker (`tools/dev/planetar-broker-shim.mjs`) |
+| Verdict | **Working mobile client against the production planetar.ca feed.** |
