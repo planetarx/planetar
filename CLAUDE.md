@@ -2,11 +2,11 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-> **Read the workspace-level `../CLAUDE.md` first.** It is the authoritative source for the broader `planetarx/` workspace: the canonical code spine (external repos `planetar-broker`, `zmesg`, `planetar-ui`, `planetar-ais`, `planetar-sat/-eo/-acoustic`, `planetar-ontology`, `planetar-registry`, `doibio`), the load-bearing proposal facts, the v1 (`zdefence/`) relationship, and the working norms (word budgets, provenance-over-polish, conservative benchmark claims, patent framing, absolute dates). Everything below is **specific to this `planetar/` git repo** and does not repeat that file.
+> **Read the workspace-level `../CLAUDE.md` first, if present.** That file lives in the local `planetarx/` workspace folder one level above this repo and is not part of this repository (a bare clone of `planetar` won't have it). It is the authoritative source for the broader `planetarx/` workspace: the canonical code spine (external repos `planetar-broker`, `zmesg`, `planetar-ui`, `planetar-ais`, `planetar-sat/-eo/-acoustic`, `planetar-ontology`, `planetar-registry`, `doibio`), the load-bearing proposal facts, the v1 (`zdefence/`) relationship, and the working norms (word budgets, provenance-over-polish, conservative benchmark claims, patent framing, absolute dates). Everything below is **specific to this `planetar/` git repo** and does not repeat that file.
 
 ## What this repo is
 
-`planetar/` is the proposal-authoring git repo (`git@github.com:sness23/planetar.git`, branch `main`) for the **IDEaS CFP6 Challenge 13, Component 1a** submission. It contains **only Markdown** — no source code, no build system, no tests, no package manager. "Working in this repo" means editing prose against hard character caps and keeping every claim traceable.
+`planetar/` is the proposal-authoring git repo (`git@github.com:planetarx/planetar.git`, branch `main`) for the **IDEaS CFP6 Challenge 13, Component 1a** submission. It contains **only Markdown** — no source code, no build system, no tests, no package manager. "Working in this repo" means editing prose against hard character caps and keeping every claim traceable.
 
 Note: the parent `planetarx/` directory is *not* a git repo, but **this `planetar/` subdirectory is** — commit here.
 
@@ -25,7 +25,7 @@ Content flows through three representations. Editing the wrong layer is the most
 
 1. **Workspace thinking docs** — `01-CHALLENGE.md` … `08-OPEN-QUESTIONS.md`, `MOAT-STRATEGY.md`. The rubric, strategy, 5-layer architecture, datasets, references, timeline, and the open-question/audit log (Q1–Q13). Reasoning lives here.
 2. **`proposal/`** — the 9 scored narrative *drafts* (`MC-1`, `MC-2`, `PRC-1`…`PRC-7`). Authoring format: a `## Draft` body plus a `## Char-count budget` section. This is where you edit prose.
-3. **`submission/`** — paste-ready DIP portal files (01–28), one per wizard form field **in portal order**. Each has a `--- PASTE THIS BELOW ---` / `--- END PASTE ---` block, a `LOCAL CHAR COUNT:`, and **blank lines stripped**. Derived from `proposal/`. `submission/README.md` is the field-by-field portal map.
+3. **`submission/`** — paste-ready DIP portal files (01–28), one per wizard form field **in portal order**. Each pasteable field has a `--- PASTE THIS BELOW ---` / `--- END PASTE ---` block with **blank lines stripped**; the scored-narrative files 09–18 also carry a `LOCAL CHAR COUNT:` line, while 01 (title), 03 (synopsis) and 07 (overview) don't — count those with the command below. Derived from `proposal/`. `submission/README.md` is the field-by-field portal map.
 
 `submission/` is downstream of `proposal/`. A change to scored content means: edit the `proposal/` draft → re-strip → update the matching `submission/NN-*.md` paste block → re-check the count. Files `20`–`28` (work plan, milestones, financials, location, glossary, references, certifications) exist only in `submission/` (later wizard steps, no `proposal/` source).
 
@@ -39,8 +39,8 @@ Content flows through three representations. Editing the wrong layer is the most
 
 There is nothing to compile; the equivalent discipline is staying under DIP's hard caps. **Blank lines between paragraphs count toward the cap** — paste blocks separate paragraphs with a single newline. Caps: Project Synopsis **2,000**, scored narratives & Project Overview **3,000**.
 
-- Count characters (not words): `wc -m <file>` on the stripped paste block, or count between the `PASTE THIS` markers. The submission file's `LOCAL CHAR COUNT:` must match DIP's counter within ±2.
-- Tightest field is the **Project Synopsis (~36 chars headroom)**; don't add blank lines back.
+- Count characters (not words) between the markers; this one-liner reproduces PRC-1's recorded 2137 exactly (other files' recorded lines drift by up to ~20 from a fresh measurement): `awk '/^--- END PASTE ---/{p=0} p{print} /^--- PASTE THIS BELOW ---/{p=1}' submission/13-prc1-st-merit.md | wc -m`. The submission file's `LOCAL CHAR COUNT:` must match DIP's counter within ±2.
+- Tightest field (measured 2026-10-06 with the command above) is **`14-prc2-novelty.md` at 2,921 of 3,000** (79 chars headroom); the Project Synopsis measures 1,859 of 2,000 (~140 headroom, not the ~36 earlier notes cite). Don't add blank lines back.
 - Smart-quote / em-dash auto-conversion in DIP can push a file over cap — replace `" " ' ' — –` with ASCII `" ' -` if DIP disagrees with the local count.
 - Markdown→plaintext stripping (bold/italic/headings/workspace meta) before pasting is documented step-by-step in `docs/pre-submission-checklist.md` (T-3).
 
@@ -54,5 +54,6 @@ There is nothing to compile; the equivalent discipline is staying under DIP's ha
 ## Gotchas
 
 - `.claude/worktrees/repoint-pt2/` is a stale git worktree, **not** the live tree — never edit files there.
-- `submission/.#25-glossary.md` is an Emacs lock symlink (dangling) — ignore; don't commit or "fix" it.
+- `submission/.#25-glossary.md` is an Emacs lock symlink (dangling) that appears only on a machine where that file is open in Emacs; it is never tracked in the repo — ignore it; don't commit or "fix" it.
+- `proposal/wal/` (a WAL segment + `offsets.dat`) and `proposal/broker-unified.log` (empty) are git-tracked leftovers from a 2026-04-27 `planetar-broker` run launched inside `proposal/` — not proposal content. Ignore them.
 - Repos the bid cites are frozen at tag `submission-2026-05-30` (commit hashes in `docs/submission-record.md`). If you re-verify a claim against external code, check out that tag, not `HEAD`.
