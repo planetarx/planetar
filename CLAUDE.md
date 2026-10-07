@@ -2,13 +2,15 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-> **Read the workspace-level `../CLAUDE.md` first.** It is the authoritative source for the broader `planetarx/` workspace: the canonical code spine (external repos `planetar-broker`, `zmesg`, `planetar-ui`, `planetar-ais`, `planetar-sat/-eo/-acoustic`, `planetar-ontology`, `planetar-registry`, `doibio`), the load-bearing proposal facts, the v1 (`zdefence/`) relationship, and the working norms (word budgets, provenance-over-polish, conservative benchmark claims, patent framing, absolute dates). Everything below is **specific to this `planetar/` git repo** and does not repeat that file.
+> **Read the workspace-level `../CLAUDE.md` first, if present.** (It exists on the author's local `planetarx/` checkout; a fresh cloud clone of this repo alone won't have it.) It is the authoritative source for the broader `planetarx/` workspace: the canonical code spine (external repos `planetar-broker`, `zmesg`, `planetar-ui`, `planetar-ais`, `planetar-sat/-eo/-acoustic`, `planetar-ontology`, `planetar-registry`, `doibio`), the load-bearing proposal facts, the v1 (`zdefence/`) relationship, and the working norms (word budgets, provenance-over-polish, conservative benchmark claims, patent framing, absolute dates). Everything below is **specific to this `planetar/` git repo** and does not repeat that file.
 
 ## What this repo is
 
-`planetar/` is the proposal-authoring git repo (`git@github.com:sness23/planetar.git`, branch `main`) for the **IDEaS CFP6 Challenge 13, Component 1a** submission. It contains **only Markdown** — no source code, no build system, no tests, no package manager. "Working in this repo" means editing prose against hard character caps and keeping every claim traceable.
+`planetar/` is the proposal-authoring git repo (GitHub `planetarx/planetar`, default branch `main`) for the **IDEaS CFP6 Challenge 13, Component 1a** submission. It contains **only Markdown** — no source code, no build system, no tests, no package manager. "Working in this repo" means editing prose against hard character caps and keeping every claim traceable.
 
 Note: the parent `planetarx/` directory is *not* a git repo, but **this `planetar/` subdirectory is** — commit here.
+
+Non-Markdown odds and ends: the two `CP6-*_ProposalSummary.pdf` filed-summary archives (root), `docs/pitch-deck.html`, and `proposal/wal/` + `proposal/broker-unified.log` (stray broker runtime output, not proposal content — ignore).
 
 ## Current state: SUBMITTED (post-submission posture)
 
@@ -39,8 +41,12 @@ Content flows through three representations. Editing the wrong layer is the most
 
 There is nothing to compile; the equivalent discipline is staying under DIP's hard caps. **Blank lines between paragraphs count toward the cap** — paste blocks separate paragraphs with a single newline. Caps: Project Synopsis **2,000**, scored narratives & Project Overview **3,000**.
 
-- Count characters (not words): `wc -m <file>` on the stripped paste block, or count between the `PASTE THIS` markers. The submission file's `LOCAL CHAR COUNT:` must match DIP's counter within ±2.
-- Tightest field is the **Project Synopsis (~36 chars headroom)**; don't add blank lines back.
+- Count characters (not words) between the markers:
+  ```sh
+  awk '/--- PASTE THIS BELOW ---/{f=1;next}/--- END PASTE ---/{f=0}f' submission/13-prc1-st-merit.md | head -c -1 | wc -m
+  ```
+  Loop over `submission/*.md` to check all fields. Where a file has a `**LOCAL CHAR COUNT:**` header line, it must match DIP's counter within ±2 (not every file carries one — e.g. `03-project-synopsis.md` doesn't).
+- The Project Synopsis is the field to watch (2,000 cap; the filed paste block measures ~1,870 with the command above). Don't add blank lines back.
 - Smart-quote / em-dash auto-conversion in DIP can push a file over cap — replace `" " ' ' — –` with ASCII `" ' -` if DIP disagrees with the local count.
 - Markdown→plaintext stripping (bold/italic/headings/workspace meta) before pasting is documented step-by-step in `docs/pre-submission-checklist.md` (T-3).
 
@@ -54,5 +60,5 @@ There is nothing to compile; the equivalent discipline is staying under DIP's ha
 ## Gotchas
 
 - `.claude/worktrees/repoint-pt2/` is a stale git worktree, **not** the live tree — never edit files there.
-- `submission/.#25-glossary.md` is an Emacs lock symlink (dangling) — ignore; don't commit or "fix" it.
+- On the author's local machine, `submission/.#25-glossary.md` may appear as an Emacs lock symlink (dangling) — ignore; don't commit or "fix" it.
 - Repos the bid cites are frozen at tag `submission-2026-05-30` (commit hashes in `docs/submission-record.md`). If you re-verify a claim against external code, check out that tag, not `HEAD`.
