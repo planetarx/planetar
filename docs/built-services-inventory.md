@@ -63,7 +63,7 @@ Audit method (every entry below): `wc -l` on source files (excluding `node_modul
 | LOC | 1,583 source + 647 in 5 test files |
 | Last commit | 2026-05-15 |
 | Broker integration | TCP publisher → 127.0.0.1:12001; emits `sar.chip`, `track.update`, human-readable `chat.pac.sar-detections` envelopes; zmesg + BE 4-byte length prefix |
-| Pipeline | Sentinel-1 GRD fetch → CFAR + land-mask → IoU tracker → typed bus envelopes |
+| Pipeline | Sentinel-1 GRD fetch → CFAR + land-mask → nearest-neighbour geo tracker → typed bus envelopes |
 | Runnable | `make install && .venv/bin/planetar-sat run …` — CLI entry from `pyproject.toml`; Dockerfile present |
 | Tests | CFAR, geocoding, land-mask, tracker, zmesg round-trip — all pass |
 | Validated on | 433 Mpx real Sentinel-1 GRD scene |

@@ -129,7 +129,7 @@ Detectors planned for the 1a demo (scope option A, per user). **Four of five shi
 | Topic out | Role | Implementation path | Status at project start |
 |---|---|---|---|
 | `ais.v1.Gap` | AIS transponder silence past expected interval for a known vessel | Heuristic on AIS stream (`planetar-ais` Node service, live Victoria BBox) | **Working — ingress shipped; gap-detector finalization is M3** |
-| `sar.v1.Detection` (`sar.chip`) | Ship chip from Sentinel-1 | `planetar-sat` Python service (1,583 LOC, 5 tests): Sentinel-1 GRD fetch → CFAR + land-mask → IoU tracker → typed bus envelopes; validated on 433 Mpx scene | **Working prototype, broker-integrated** |
+| `sar.v1.Detection` (`sar.chip`) | Ship chip from Sentinel-1 | `planetar-sat` Python service (1,583 LOC, 5 tests): Sentinel-1 GRD fetch → CFAR + land-mask → nearest-neighbour geo tracker → typed bus envelopes; validated on 433 Mpx scene | **Working prototype, broker-integrated** |
 | `eo.v1.Detection` | Ship chip from surface EO | `planetar-eo` Python service (1,786 LOC): webcam feed → YOLO11n vessel detection → typed bus envelopes; Victoria POC sources wired (CHEK / BC Ferries / ONC / Hakai) | **Working prototype, broker-integrated** |
 | `acoustic.v1.Event` | Vessel transit from hydrophone | `planetar-acoustic` Python service (2,621 LOC, 5 tests): hydrophone source → CAR-FAC + Lyons SAI → CV classifier → typed bus envelopes | **Working prototype, broker-integrated** |
 | `rf.v1.Emission` | RF emission signature | `planetar-rf` (new) — best-effort public/synthetic RF → emission-signature encoder | **M1–M2 R&D (real encoder; data-sourcing risk, see PRC-4)** |

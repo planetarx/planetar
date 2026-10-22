@@ -136,7 +136,7 @@ Verified by git remote URL (`github.com/sness23/...` and `github.com/planetarx/.
 | Project | Stack | LOC | Status |
 |---|---|---|---|
 | **planetar-ais** | Node / JS | (in repo) | Live AIS for Victoria BBox → per-MMSI bus channels. First ingress; pattern donor for the others. |
-| **planetar-sat** | Python ≥3.11 (NumPy / SciPy / Rasterio / Shapely) | 1,583 + 647 (5 test files) | Sentinel-1 GRD fetch → CFAR + land-mask → IoU tracker → `sar.chip` / `track.update` envelopes. Validated on 433 Mpx scene. Last commit 2026-05-15. |
+| **planetar-sat** | Python ≥3.11 (NumPy / SciPy / Rasterio / Shapely) | 1,583 + 647 (5 test files) | Sentinel-1 GRD fetch → CFAR + land-mask → nearest-neighbour geo tracker → `sar.chip` / `track.update` envelopes. Validated on 433 Mpx scene. Last commit 2026-05-15. |
 | **planetar-eo** | Python ≥3.11 (NumPy / OpenCV; optional torch + ultralytics) | 1,786 | Public webcam (CHEK / BC Ferries Swartz Bay / ONC / Hakai 2688×1512) → YOLO11n vessel detection → `eo.frame` / `eo.detection` envelopes. Last commit 2026-05-15. |
 | **planetar-acoustic** | Python ≥3.11 (NumPy / SciPy / Soundfile; optional torch / onnxruntime) | 2,621 + 567 (5 test files) | Hydrophone source (synth / archive / ONC / OrcaSound) → CAR-FAC cochlear model + Lyons SAI → CV classifier → `acoustic.{site,detect,psd,classify}` envelopes. Last commit 2026-05-15. |
 
@@ -196,7 +196,7 @@ For MC-1 the bid claims **TRL 3–4 for the bus + envelope + shell + entity grap
 
 **Per-modality detectors — shipped at project start:**
 - ✅ **Live AIS ingress** — `planetar-ais`, Victoria BBox, per-MMSI bus channels. (TRL 3.)
-- ✅ **SAR detector** — `planetar-sat`, Sentinel-1 GRD → CFAR + land-mask + IoU tracker → typed bus envelopes, validated on 433 Mpx scene. (TRL 3.)
+- ✅ **SAR detector** — `planetar-sat`, Sentinel-1 GRD → CFAR + land-mask + nearest-neighbour geo tracker → typed bus envelopes, validated on 433 Mpx scene. (TRL 3.)
 - ✅ **EO detector** — `planetar-eo`, public webcam (CHEK / BC Ferries / ONC / Hakai) → YOLO11n vessel detection → typed bus envelopes. (TRL 3.)
 - ✅ **Acoustic detector** — `planetar-acoustic`, hydrophone source → CAR-FAC + Lyons SAI → CV classifier → typed bus envelopes. (TRL 3.)
 
