@@ -168,7 +168,7 @@ The scientific contribution of the 1a. The detectors (Layer 3) produce per-modal
 
 ## Layer 4 — Entity graph (`planetar-ontology`, developed beyond US Patent 10,936,582 and the `doibio` POC)
 
-This layer is **not new design work** for the 1a. The applicant is a named inventor (Salesforce-assigned) on a granted patent covering the integrated-entity-view architecture (US 10,936,582, *Integrated entity view across distributed systems*, 2021) and has a working POC implementation in `~/data/dev/doibio`, hardened through ~18 months of iteration. The 1a's entity graph is a substantial development beyond that background — not a re-implementation of it.
+This layer is **not new design work** for the 1a. The applicant is an applicant-named inventor on US Patent 10,936,582 (Salesforce-assigned, 1 of 19 inventors; *Integrated entity view across distributed systems*, 2021) and has a working POC implementation in `~/data/dev/doibio`, hardened through ~18 months of iteration. The 1a's entity graph is a substantial development beyond that background — not a re-implementation of it.
 
 **Production successor shipping at project start: `planetar-ontology`** — TypeScript / Node, zero npm dependencies (native `node:sqlite`), 2,323 LOC, **30 tests passing**, broker-integrated as a TCP subscriber on port 12002. Phases P1–P5 are complete:
 
@@ -246,7 +246,7 @@ When the graph publishes `vessel.v1.ReIDCandidate`, that publication is *itself*
 
 ### Why the entity-graph claim is now strong
 
-The proposal does not say "we own a granted patent for this" — and it does not lean on the patent as the novelty. It says: *"The applicant is a named inventor (Salesforce-assigned) on US Patent 10,936,582 covering the integrated-entity-view architecture; that architecture is implemented in the doibio POC (~20 k LOC, 35 entity schemas, working identity-resolution engine, working event-sourced backend, ~18 months of iteration); planetar develops it substantially further — retypes it for vessels, rebuilds it zero-dep, and binds it to the nanosecond bus."* Every clause is auditable. The prior patent is named-inventor background; doibio is the implementation evidence; planetar is the new work. Each step verifiable.
+The proposal does not say "we own a granted patent for this" — and it does not lean on the patent as the novelty. Its framing (a paraphrase, not filed text): *"The applicant is an applicant-named inventor on US Patent 10,936,582 (Salesforce-assigned, 1 of 19 inventors), whose specification describes an integrated-entity-view architecture; an architecture of that kind is implemented in the doibio POC (~20 k LOC, 35 entity schemas, working identity-resolution engine, working event-sourced backend, ~18 months of iteration); planetar develops it substantially further — retypes it for vessels, rebuilds it zero-dep, and binds it to the nanosecond bus."* Every clause is auditable. The prior patent is named-inventor background; doibio is the implementation evidence; planetar is the new work. Each step verifiable.
 
 ---
 

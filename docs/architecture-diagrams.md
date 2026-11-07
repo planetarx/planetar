@@ -39,7 +39,7 @@ flowchart TB
         REID["vessel.ReIDCandidate<br/>(cross-modal fusion · 1a research)"]
     end
 
-    subgraph Graph[" Layer 4 · Entity graph (US Patent 10,936,582 + doibio POC) "]
+    subgraph Graph[" Layer 4 · Entity graph (developed beyond US 10,936,582 + doibio POC) "]
         VESSEL[Vessel entity]
         VESSELID[VesselIdentification<br/>MMSI · IMO · acoustic · RF · OCR]
         SOURCE[ObservationSource<br/>provenance + confidence]
